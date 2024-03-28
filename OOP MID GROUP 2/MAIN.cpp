@@ -4,7 +4,7 @@
 #include<fstream>
 using namespace std;
 
-const string BOOKING_FILE = "bookings";
+const string BOOKING_FILE = "bookings.txt";
 
 class bookings
 {
@@ -14,7 +14,7 @@ public:
 	string time;
 	string serial_num;
 
-	void bookings_system(string name, string date, string time, string serial_num)
+	void bookings_system(string name, string date, string time)
 	{
 		member_name = name;
 		this->date = date;
@@ -24,10 +24,10 @@ public:
 
 	void display() const
 	{
-		cout << "Serial Number : " << serial_num << endl;
 		cout << "Customer Name : " << member_name << endl;
 		cout << "Booking Date : " << date << endl;
 		cout << "Booking Time : " << time << endl;
+		cout << "*************************\n" << endl;
 	}
 	string get_time() const
 	{
@@ -71,7 +71,7 @@ public:
 	}
 	void view_bookings() const
 	{
-		cout << "All Bookings are : \n";
+		cout << "All Bookings are : \n\n\n";
 		for (auto& bookings : bookings_list)
 		{
 			bookings.display();
@@ -109,10 +109,8 @@ main_menu:
 		getline(cin, date);
 		cout << "Enter Time Slot : ";
 		getline(cin, time);
-		string serial_num = "0";
-		serial_num = serial_num + "1";
 		bookings booking1;
-		booking1.bookings_system(name, date, time, serial_num);
+		booking1.bookings_system(name, date, time);
 		fc1.add_bookings(booking1);
 		savedata(bookings_list);
 		system("pause");
@@ -142,7 +140,6 @@ void savedata(vector<bookings>& booking_list)
 			bookings_file << bookings.member_name << endl;
 			bookings_file << bookings.time << endl;
 			bookings_file << bookings.date << endl;
-			bookings_file << bookings.serial_num << endl;
 		}
 	}
 	bookings_file.close();
@@ -157,7 +154,7 @@ void loaddata(vector<bookings>& booking_list)
 		string date;
 		string time;
 		string serial_num;
-		while (getline(bookings_file, name) && getline(bookings_file, date) && getline(bookings_file, time) && getline(bookings_file, serial_num))
+		while (getline(bookings_file, name) && getline(bookings_file, date) && getline(bookings_file, time))
 		{
 			bookings b1;
 			b1.member_name = name;
